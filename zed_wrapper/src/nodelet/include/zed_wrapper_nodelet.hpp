@@ -359,6 +359,8 @@ namespace zed_wrapper {
         tf2_ros::TransformBroadcaster mTransformOdomBroadcaster;
         tf2_ros::TransformBroadcaster mTransformImuBroadcaster;
 
+        std::string camera;
+
         std::string mRgbFrameId;
         std::string mRgbOptFrameId;
 

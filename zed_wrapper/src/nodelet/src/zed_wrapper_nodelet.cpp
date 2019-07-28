@@ -458,6 +458,9 @@ namespace zed_wrapper {
 
         // ----> General
         // Get parameters from param files
+        
+        mNhNs.param<std::string>("camera", camera, "");
+        NODELET_INFO_STREAM(" * camera\t\t->" << camera.c_str());
         mNhNs.getParam("general/resolution", mCamResol);
         NODELET_INFO_STREAM(" * Camera Resolution\t\t-> " << sl::toString(static_cast<sl::RESOLUTION>
                             (mCamResol)).c_str());
@@ -636,17 +639,17 @@ namespace zed_wrapper {
         mNhNs.param<std::string>("stream", mRemoteStreamAddr, std::string());
 
         // ----> Coordinate frames
-        mNhNs.param<std::string>("tracking/world_frame", mWorldFrameId, "map");
-        mNhNs.param<std::string>("tracking/map_frame", mMapFrameId, "map");
-        mNhNs.param<std::string>("tracking/odometry_frame", mOdometryFrameId, "odom");
-        mNhNs.param<std::string>("general/base_frame", mBaseFrameId, "base_link");
-        mNhNs.param<std::string>("general/camera_frame", mCameraFrameId, "zed_camera_center");
-        mNhNs.param<std::string>("imu/imu_frame", mImuFrameId, "imu_link");
-        mNhNs.param<std::string>("general/left_camera_frame", mLeftCamFrameId, "left_camera_frame");
-        mNhNs.param<std::string>("general/left_camera_optical_frame", mLeftCamOptFrameId, "left_camera_optical_frame");
-        mNhNs.param<std::string>("general/right_camera_frame", mRightCamFrameId, "right_camera_frame");
-        mNhNs.param<std::string>("general/right_camera_optical_frame", mRightCamOptFrameId, "right_camera_optical_frame");
-        mDepthFrameId = mLeftCamFrameId;
+        mNhNs.param<std::string>("tracking/world_frame", mWorldFrameId, "map"); if(!camera.empty()) mWorldFrameId = camera + "/" + mWorldFrameId;
+        mNhNs.param<std::string>("tracking/map_frame", mMapFrameId, "map"); if(!camera.empty()) mMapFrameId = camera + "/" + mMapFrameId;
+        mNhNs.param<std::string>("tracking/odometry_frame", mOdometryFrameId, "odom"); if(!camera.empty()) mOdometryFrameId = camera + "/" + mOdometryFrameId;
+        mNhNs.param<std::string>("general/base_frame", mBaseFrameId, "base_link"); if(!camera.empty()) mBaseFrameId = camera + "/" + mBaseFrameId;
+        mNhNs.param<std::string>("general/camera_frame", mCameraFrameId, "zed_camera_center"); if(!camera.empty()) mCameraFrameId = camera + "/" + mCameraFrameId;
+        mNhNs.param<std::string>("imu/imu_frame", mImuFrameId, "imu_link"); if(!camera.empty()) mImuFrameId = camera + "/" + mImuFrameId;
+        mNhNs.param<std::string>("general/left_camera_frame", mLeftCamFrameId, "left_camera_frame"); if(!camera.empty()) mLeftCamFrameId = camera + "/" + mLeftCamFrameId;
+        mNhNs.param<std::string>("general/left_camera_optical_frame", mLeftCamOptFrameId, "left_camera_optical_frame"); if(!camera.empty()) mLeftCamOptFrameId = camera + "/" + mLeftCamOptFrameId;
+        mNhNs.param<std::string>("general/right_camera_frame", mRightCamFrameId, "right_camera_frame"); if(!camera.empty()) mRightCamFrameId = camera + "/" + mRightCamFrameId;
+        mNhNs.param<std::string>("general/right_camera_optical_frame", mRightCamOptFrameId, "right_camera_optical_frame"); if(!camera.empty()) mRightCamOptFrameId = camera + "/" + mRightCamOptFrameId;
+        mDepthFrameId = mLeftCamFrameId; 
         mDepthOptFrameId = mLeftCamOptFrameId;
 
         // Note: Depth image frame id must match color image frame id

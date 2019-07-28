@@ -17,6 +17,8 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <launch>
+    <!-- Camera prefix -->
+    <arg name="camera"                default=""/> 
     <!-- Camera Model -->
     <arg name="node_name"             default="zed_node" />
 
@@ -38,6 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <group if="$(arg publish_urdf)">
         <param name="zed_description" textfile="$(find zed_wrapper)/urdf/$(arg camera_model).urdf" />
         <node name="zed_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+            <param name="tf_prefix" value="$(arg camera)"/>
             <remap from="robot_description" to="zed_description" />
         </node>
     </group>
@@ -46,6 +49,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <rosparam file="$(find zed_wrapper)/params/common.yaml" command="load" />
         <rosparam file="$(find zed_wrapper)/params/$(arg camera_model).yaml" command="load" />
 
+        <param name="camera"            value="$(arg camera)"/>
         <!-- SVO file path -->
         <param name="svo_file"          value="$(arg svo_file)" />
 

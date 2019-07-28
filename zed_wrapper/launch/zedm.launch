@@ -23,9 +23,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <arg name="node_name"            default="zed_node" />
     <arg name="camera_model"         default="zedm" /> <!-- 'zed' or 'zedm' -->
     <arg name="publish_urdf"         default="true" />
+    <arg name="camera"               default=""/>
 
     <group ns="zed">
         <include file="$(find zed_wrapper)/launch/zed_camera.launch">
+            <arg name="camera"              value="$(arg camera)"/>
             <arg name="svo_file"            value="$(arg svo_file)" />
             <arg name="stream"              value="$(arg stream)" />
             <arg name="node_name"           value="$(arg node_name)" />
