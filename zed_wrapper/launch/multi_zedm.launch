@@ -1,0 +1,13 @@
+<launch>
+  <arg name="camera1_serial_id"/>
+  <arg name="camera2_serial_id"/>
+  <include file="$(find zed_wrapper)/launch/zedm.launch" ns="camera1">
+    <arg name="camera" value="camera1"/>
+    <arg name="camera_id" value="0"/>
+  </include>
+
+  <include file="$(find zed_wrapper)/launch/zedm.launch" ns="camera2">
+    <arg name="camera" value="camera2"/>
+    <arg name="camera_id" value="1"/>
+  </include>
+</launch>
